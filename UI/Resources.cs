@@ -18,7 +18,13 @@ namespace UI
         public static CogToolBlock ToolBlock;
         public static string VppPath, PasswordPath;
         public static string LoggedUser, LoggedPassword;
-        public static Thread TreadListen;
+        public static Thread ThreadListen;
         public static MainWindow mainWindow;
+        public const ushort OK_port = 10, NG_port = 11, Empty_port = 12, inSignal_port = 1;
+        public const ushort cardIndex = 0;
+        public const int startSignal = 0, endSignal = 1;
+        public const int signalWidth = 100;
+        public static bool loggedIn = false;
+        public const string password = "world", user = "hello";
     }
 }

@@ -41,36 +41,48 @@ namespace UI
         /// <summary>
         ///     Read trigger signal from IO card. This function only works within a while loop
         /// </summary>
-        /// <param name="cardNumber">The index of current connected IO card</param>
-        /// <param name="portNumber">The index of port to read from the IO card </param>
-        /// <param name="triggerState">Specify the activate signal of the incoming signal</param>
         /// <param name="initialState">
         ///     Specify the initial state of of incoming signal, this param should not be modified from
         ///     outside
         /// </param>
         /// <returns>true for triggered, false for not triggered</returns>
-        public static bool read_IOC0640_step(ushort cardNumber, ushort portNumber, int triggerState,
-            ref int initialState)
+        private static bool read_IOC0640_step(ref int initialState)
         {
-            var stateRead = IOC0640.ioc_read_inbit(cardNumber, portNumber);
+            int stateRead = IOC0640.ioc_read_inbit(Resources.cardIndex, Resources.inSignal_port);
             if (stateRead == initialState) return false;
             initialState = stateRead;
-            return stateRead == triggerState;
+            return stateRead == Resources.startSignal;
         }
 
-        public static void Listen_for_IOSignals()
+        private static void write_IOC0640_step(RunResult result)
         {
-            Resources.TreadListen = new Thread(portNum =>
+             ushort outPort_index = result == RunResult.Missing ? Resources.Empty_port :
+                result == RunResult.NG ? Resources.NG_port : Resources.OK_port;
+             IOC0640.ioc_write_outbit(Resources.cardIndex, outPort_index, Resources.startSignal);
+             Thread.Sleep(Resources.signalWidth);
+             IOC0640.ioc_write_outbit(Resources.cardIndex, outPort_index, Resources.endSignal);
+        }
+
+        public static void Listen_for_IOSignals_async()
+        {
+            Resources.ThreadListen = new Thread(() =>
             {
                 var initialState = 1;
                 while (true)
                 {
-                    var triggered = read_IOC0640_step(0, 1, 0, ref initialState);
+                    // Read signal of action from the IO card
+                    var triggered = read_IOC0640_step(ref initialState);
                     if (!triggered) continue;
+                    // Run the vision tool, refresh the image shown and get the run result
                     RunResult runResult = runToolBlock_and_refreshImage();
+                    // Light effect for result visualization
                     updateLights(runResult);
+                    // Submit the result back to the IO card
+                    // TODO: make this write async
+                    write_IOC0640_step(runResult);
                 }
             });
+            Resources.ThreadListen.Start();
         }
         
         private static void flash(RunResult result)
