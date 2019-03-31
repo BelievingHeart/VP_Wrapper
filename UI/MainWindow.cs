@@ -23,7 +23,9 @@ namespace UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            // Initialize resources from the MainWindow
+            Resources.mainWindow = this;
+            Resources.timerFlash = new Timer {Interval = 50};
         }
 
         private void _btnEdit_Click(object sender, EventArgs e)

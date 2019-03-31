@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this._btnEdit = new System.Windows.Forms.Button();
-            this.cogDisplay1 = new Cognex.VisionPro.Display.CogDisplay();
             this.textBox_message = new System.Windows.Forms.TextBox();
             this.label_passLight = new System.Windows.Forms.Label();
             this.label_emptyLight = new System.Windows.Forms.Label();
@@ -39,7 +38,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.cogDisplay1)).BeginInit();
+            this.cogRecordDisplay1 = new Cognex.VisionPro.CogRecordDisplay();
+            ((System.ComponentModel.ISupportInitialize)(this.cogRecordDisplay1)).BeginInit();
             this.SuspendLayout();
             // 
             // _btnEdit
@@ -53,25 +53,6 @@
             this._btnEdit.Text = "Edit";
             this._btnEdit.UseVisualStyleBackColor = true;
             this._btnEdit.Click += new System.EventHandler(this._btnEdit_Click);
-            // 
-            // cogDisplay1
-            // 
-            this.cogDisplay1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cogDisplay1.ColorMapLowerClipColor = System.Drawing.Color.Black;
-            this.cogDisplay1.ColorMapLowerRoiLimit = 0D;
-            this.cogDisplay1.ColorMapPredefined = Cognex.VisionPro.Display.CogDisplayColorMapPredefinedConstants.None;
-            this.cogDisplay1.ColorMapUpperClipColor = System.Drawing.Color.Black;
-            this.cogDisplay1.ColorMapUpperRoiLimit = 1D;
-            this.cogDisplay1.Location = new System.Drawing.Point(11, 0);
-            this.cogDisplay1.Margin = new System.Windows.Forms.Padding(2);
-            this.cogDisplay1.MouseWheelMode = Cognex.VisionPro.Display.CogDisplayMouseWheelModeConstants.Zoom1;
-            this.cogDisplay1.MouseWheelSensitivity = 1D;
-            this.cogDisplay1.Name = "cogDisplay1";
-            this.cogDisplay1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cogDisplay1.OcxState")));
-            this.cogDisplay1.Size = new System.Drawing.Size(368, 219);
-            this.cogDisplay1.TabIndex = 2;
             // 
             // textBox_message
             // 
@@ -142,11 +123,27 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "无料";
             // 
+            // cogRecordDisplay1
+            // 
+            this.cogRecordDisplay1.ColorMapLowerClipColor = System.Drawing.Color.Black;
+            this.cogRecordDisplay1.ColorMapLowerRoiLimit = 0D;
+            this.cogRecordDisplay1.ColorMapPredefined = Cognex.VisionPro.Display.CogDisplayColorMapPredefinedConstants.None;
+            this.cogRecordDisplay1.ColorMapUpperClipColor = System.Drawing.Color.Black;
+            this.cogRecordDisplay1.ColorMapUpperRoiLimit = 1D;
+            this.cogRecordDisplay1.Location = new System.Drawing.Point(12, 12);
+            this.cogRecordDisplay1.MouseWheelMode = Cognex.VisionPro.Display.CogDisplayMouseWheelModeConstants.Zoom1;
+            this.cogRecordDisplay1.MouseWheelSensitivity = 1D;
+            this.cogRecordDisplay1.Name = "cogRecordDisplay1";
+            this.cogRecordDisplay1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cogRecordDisplay1.OcxState")));
+            this.cogRecordDisplay1.Size = new System.Drawing.Size(346, 206);
+            this.cogRecordDisplay1.TabIndex = 10;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 325);
+            this.Controls.Add(this.cogRecordDisplay1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -154,13 +151,12 @@
             this.Controls.Add(this.label_emptyLight);
             this.Controls.Add(this.label_passLight);
             this.Controls.Add(this.textBox_message);
-            this.Controls.Add(this.cogDisplay1);
             this.Controls.Add(this._btnEdit);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";
             this.Text = "MainWindow";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.cogDisplay1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cogRecordDisplay1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,14 +165,14 @@
         #endregion
 
         private System.Windows.Forms.Button _btnEdit;
-        private Cognex.VisionPro.Display.CogDisplay cogDisplay1;
         private System.Windows.Forms.TextBox textBox_message;
-        private System.Windows.Forms.Label label_passLight;
-        private System.Windows.Forms.Label label_emptyLight;
-        private System.Windows.Forms.Label label_rejectLight;
+        public System.Windows.Forms.Label label_passLight;
+        public System.Windows.Forms.Label label_emptyLight;
+        public System.Windows.Forms.Label label_rejectLight;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        public Cognex.VisionPro.CogRecordDisplay cogRecordDisplay1;
     }
 }
 
