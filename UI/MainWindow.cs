@@ -20,10 +20,20 @@ namespace UI
         {
             // Initialize resources from the MainWindow
             Resources.mainWindow = this;
-/*            Utilities.load_vpp(Resources.VppPath);
-            Utilities.Listen_for_IOSignals_async();*/
+            // Load vpp file
+            Utilities.load_vpp(Resources.VppPath);
+            // Init the IO card and begin listening in a background thread
+            try
+            {
+                int initSuccess = IOC0640.ioc_board_init();
+                textBox_message.AppendText(initSuccess>0? "IO card init succeeded!\n\r":"IO card init failed!\n\r");
+            }
+            catch (Exception exception)
+            {
+                textBox_message.AppendText("IO card init failed: " + exception.Message + "\n\r");
+            }
+            Utilities.Listen_for_IOSignals_async();
         }
-
         private void _btnEdit_Click(object sender, EventArgs e)
         {
             if (Resources.loggedIn)
@@ -37,23 +47,23 @@ namespace UI
             }
         }
 
+        // The following 3 functions handle timerFlash.Tick
         private void flash_OK(object sender, EventArgs e)
         {
             OK_lightOn = !OK_lightOn;
             label_passLight.Text = OK_lightOn ? "●" : " ";
         }
-
         private void flash_NG(object sender, EventArgs e)
         {
             NG_lightOn = !NG_lightOn;
             label_rejectLight.Text = NG_lightOn ? "●" : " ";
         }
-
         private void flash_Missing(object sender, EventArgs e)
         {
             Missing_lightOn = !Missing_lightOn;
             label_emptyLight.Text = Missing_lightOn ? "●" : " ";
         }
+
 
         private void btn_login_Click(object sender, EventArgs e)
         {
